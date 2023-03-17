@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
+import CategoriesList from './components/CategoriesList';
 import shoppingCart from './img/shoppingCart.png';
 import Cart from './pages/cart/Cart';
 import ProductList from './pages/ProductList';
@@ -15,6 +16,7 @@ class App extends React.Component {
           <Route path="/" exact component={ ProductList } />
           <Route path="/cart" component={ Cart } />
         </Switch>
+        <CategoriesList />
       </main>
     );
   }
