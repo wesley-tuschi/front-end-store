@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
+import Products from '../components/Products';
 
 class ProductList extends Component {
   state = {
-    product: '',
+    inputValue: '',
     showMessage: true,
   };
 
+  show = () => {
+    const { inputValue } = this.state;
+    if (inputValue !== '') {
+      this.setState({ showMessage: false });
+    } else {
+      this.setState({ showMessage: true });
+    }
+  };
+
   handleInputChange = ({ target }) => {
-    const product = target.value;
-    const showMessage = product.length === 0;
-    this.setState({ product, showMessage });
+    const { value } = target;
+    this.setState({
+      inputValue: value,
+    }, () => this.show()); // Aqui a função de atualizar o status 'showMessage' deve ser passada como segundo parâmetro para garantir que a atualização ocorra apenas após a atualização do input
   };
 
   render() {
-    const { product, showMessage } = this.state;
+    const { showMessage, inputValue } = this.state;
     const message = 'Digite algum termo de pesquisa ou escolha uma categoria.';
     return (
-      <form>
+      <div>
         <label>
           <input
-            name="product"
             type="text"
+            data-testid="query-input"
             placeholder="Pesquise por um produto"
-            value={ product }
             onChange={ this.handleInputChange }
           />
         </label>
         { showMessage && <div data-testid="home-initial-message">{ message }</div> }
-      </form>
+        <Products
+          productSearch={ inputValue }
+        />
+      </div>
     );
   }
 }
