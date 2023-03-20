@@ -8,7 +8,6 @@ class Cart extends Component {
     super()
     this.state = {
       array: [],
-      teste: [1, 2, 3]
     };
   }
 
@@ -19,15 +18,18 @@ class Cart extends Component {
   }
   
   render() {
-      const { array, teste } = this.state
+      const { array } = this.state
+    if (!array) {
+      return <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
+    }
     return (
       <>
-        <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
-        <ul>
 
-        {teste.map((t) => {
-          <p>hello{t}</p>
-        })}
+        <ul>
+          {array.map((id) => (
+            <Card id={id}
+            />
+          ))}
         </ul>
       </>
     );

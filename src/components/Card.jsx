@@ -33,8 +33,7 @@ class Card extends React.Component {
     const { name, price, image } = this.state
 
     return (
-      <div data-testid="product">
-        hello world
+      <div data-testid="shopping-cart-product-name">
         <Link
           data-testid="product-detail-link"
           to={ `/product/${id}` }
