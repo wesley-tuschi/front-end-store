@@ -1,13 +1,18 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
+import { getLocalStorage } from '../services/helpers'
 
 class ProductDetails extends Component {
-  state = {
-    name: '',
-    price: '',
-    image: '',
-  };
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      price: '',
+      image: '',
+    };
+  }
 
   componentDidMount() {
     this.fetchProductId();
@@ -23,15 +28,25 @@ class ProductDetails extends Component {
     });
   };
 
+  addProductToCart = () => {
+    const { match: { params: { id } } } = this.props;
+    getLocalStorage(id);
+  }
+
   render() {
     const { name, price, image } = this.state;
+    const { match: { params: { id } } } = this.props;
     return (
-      <div>
-        <p data-testid="product-detail-name">{name}</p>
-        <p data-testid="product-detail-price">{price}</p>
-        <img data-testid="product-detail-image" src={ image } alt={ name } />
-        <button data-testid="shopping-cart-button">Adicionar ao carrinho</button>
-      </div>
+      <>
+        <Link data-testid="shopping-cart-button" to="/cart">
+        </Link>
+        <div>
+          <p data-testid="product-detail-name">{name}</p>
+          <p data-testid="product-detail-price">{price}</p>
+          <img data-testid="product-detail-image" src={ image } alt={ name } />
+          <button data-testid="product-detail-add-to-cart" onClick={ (id) => this.addProductToCart(id) }>Adicionar ao carrinho</button>
+        </div>
+      </>
     );
   }
 }
