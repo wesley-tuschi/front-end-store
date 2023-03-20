@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 import Products from '../components/Products';
+import CategoriesList from '../components/CategoriesList';
 
 class ProductList extends Component {
   state = {
     inputValue: '',
     showMessage: true,
+    category: '',
+    productList: [],
+    totalItens: '',
+  };
+
+  searchForCategory = ({ target }) => { // Função usada para elevar o state de CategoriesList
+    this.setState({ category: target.name,
+    }, async () => {
+      this.searchForInput();
+    });
+  };
+
+  searchForInput = async () => {
+    const { category, inputValue } = this.state;
+    const productObjs = await getProductsFromCategoryAndQuery(category, inputValue);
+    console.log(productObjs);
+    this.setState({
+      productList: productObjs.results,
+      totalItens: productObjs.paging.total,
+    });
   };
 
   show = () => {
@@ -24,7 +46,7 @@ class ProductList extends Component {
   };
 
   render() {
-    const { showMessage, inputValue } = this.state;
+    const { showMessage, productList, totalItens } = this.state;
     const message = 'Digite algum termo de pesquisa ou escolha uma categoria.';
     return (
       <div>
@@ -37,8 +59,11 @@ class ProductList extends Component {
           />
         </label>
         { showMessage && <div data-testid="home-initial-message">{ message }</div> }
+        <CategoriesList selectCategory={ this.searchForCategory } />
         <Products
-          productSearch={ inputValue }
+          searchForInput={ this.searchForInput }
+          productList={ productList }
+          totalItens={ totalItens }
         />
       </div>
     );

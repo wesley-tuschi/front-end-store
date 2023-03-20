@@ -26,7 +26,8 @@ class CategoriesList extends React.Component {
               key={ category.id }
               data-testid="category"
               type="button"
-              onClick={ () => selectCategory(category.id) }
+              onClick={ (target) => selectCategory(target) }
+              name={ category.id }
               value={ category.name }
             >
               { category.name }
