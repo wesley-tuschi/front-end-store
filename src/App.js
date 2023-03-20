@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import shoppingCart from './img/shoppingCart.png';
 import Cart from './pages/cart/Cart';
+import ProductDetails from './pages/ProductDetails';
 import ProductList from './pages/ProductList';
 
 class App extends React.Component {
@@ -14,6 +15,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/" exact component={ ProductList } />
           <Route path="/cart" component={ Cart } />
+          <Route path="/product/:id" component={ ProductDetails } />
         </Switch>
       </main>
     );

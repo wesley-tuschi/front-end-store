@@ -19,6 +19,7 @@ class Products extends React.Component {
           {productList.map((product) => (
             <ProductCard
               key={ product.id }
+              id={ product.id }
               name={ product.title }
               image={ product.thumbnail }
               price={ product.price }
@@ -37,7 +38,7 @@ Products.propTypes = {
   productList: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     image: PropTypes.string,
-    price: PropTypes.string,
+    price: PropTypes.number,
   })).isRequired,
 };
 
