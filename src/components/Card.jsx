@@ -1,58 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { getProductById } from '../services/api';
 
 class Card extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      name: '',
-      price: '',
-      image: '',
-    };
-  }
-
-  componentDidMount() {
-    this.fetchProductId();
-  }
-
-  fetchProductId = async () => {
-    const { id }  = this.props;
-    const productObj = await getProductById(id);
-    this.setState({
-      name: productObj.title,
-      price: productObj.price,
-      image: productObj.thumbnail,
-    });
-  };
-
   render() {
-    
-    const { id } = this.props;
-    const { name, price, image } = this.state
+    const { quantity, name, image, price } = this.props;
 
     return (
-      <div data-testid="shopping-cart-product-name">
-        <Link
-          data-testid="product-detail-link"
-          to={ `/product/${id}` }
-          id={ id }
-          name={ name }
-          price={ price }
-          image={ image }
-        >
-          <p>{name}</p>
-          <p>{price}</p>
-          <img src={ image } alt={ name } />
-        </Link>
-      </div>
+      <li>
+        <h4 data-testid="shopping-cart-product-name">{name}</h4>
+        <p data-testid="shopping-cart-product-quantity">{quantity}</p>
+        <p>{price}</p>
+        <img src={ image } alt={ name } />
+      </li>
     );
   }
 }
 
 Card.propTypes = {
-  id: PropTypes.string.isRequired,
+  quantity: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
 };
 
 export default Card;

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
-import { getLocalStorage } from '../services/helpers'
+import { saveLocalStorage } from '../services/helpers';
 
 class ProductDetails extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       name: '',
       price: '',
@@ -30,23 +29,24 @@ class ProductDetails extends Component {
 
   addProductToCart = () => {
     const { match: { params: { id } } } = this.props;
-    getLocalStorage(id);
-  }
+    const { name, image, price } = this.state;
+    saveLocalStorage(id, name, price, image);
+  };
 
   render() {
     const { name, price, image } = this.state;
-    const { match: { params: { id } } } = this.props;
     return (
-      <>
-        <Link data-testid="shopping-cart-button" to="/cart">
-        </Link>
-        <div>
-          <p data-testid="product-detail-name">{name}</p>
-          <p data-testid="product-detail-price">{price}</p>
-          <img data-testid="product-detail-image" src={ image } alt={ name } />
-          <button data-testid="product-detail-add-to-cart" onClick={ (id) => this.addProductToCart(id) }>Adicionar ao carrinho</button>
-        </div>
-      </>
+      <div>
+        <p data-testid="product-detail-name">{name}</p>
+        <p data-testid="product-detail-price">{price}</p>
+        <img data-testid="product-detail-image" src={ image } alt={ name } />
+        <button
+          data-testid="product-detail-add-to-cart"
+          onClick={ this.addProductToCart }
+        >
+          Adicionar ao carrinho
+        </button>
+      </div>
     );
   }
 }
