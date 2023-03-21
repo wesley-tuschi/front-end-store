@@ -6,7 +6,7 @@ import { saveLocalStorage } from '../services/helpers';
 class ProductCard extends React.Component {
   addProductToCart = () => {
     const { id, name, price, image } = this.props;
-    saveLocalStorage(id, name, price, image);
+    saveLocalStorage(id, name, price, image, 1);
   };
 
   render() {
