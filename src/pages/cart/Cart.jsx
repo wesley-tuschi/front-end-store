@@ -15,6 +15,31 @@ class Cart extends Component {
     });
   }
 
+  updateLocalStorage = () => {
+    const { array } = this.state;
+    localStorage.setItem('product', JSON.stringify(array));
+  };
+
+  increaseQuantity = (index) => {
+    const { array } = this.state;
+    array[index].quantity += 1;
+    this.setState({ array }, this.updateLocalStorage);
+  };
+
+  decreaseQuantity = (index) => {
+    const { array } = this.state;
+    if (array[index].quantity > 1) {
+      array[index].quantity -= 1;
+      this.setState({ array }, this.updateLocalStorage);
+    }
+  };
+
+  removeProduct = (index) => {
+    const { array } = this.state;
+    array.splice(index, 1);
+    this.setState({ array }, this.updateLocalStorage);
+  };
+
   // newArray = async () => {
   //   const { array } = this.state;
   //   if (!array) {
@@ -32,19 +57,23 @@ class Cart extends Component {
 
   render() {
     const { array } = this.state;
+
     if (array === null) {
       return <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>;
     }
     return (
       <ul>
         {array
-          .map(({ id, quantity, name, image, price }) => (
+          .map(({ id, quantity, name, image, price }, index) => (
             <Card
               key={ id }
               name={ name }
               quantity={ quantity }
               image={ image }
               price={ price }
+              onIncrease={ () => this.increaseQuantity(index) }
+              onDecrease={ () => this.decreaseQuantity(index) }
+              onRemove={ () => this.removeProduct(index) }
             />
           ))}
       </ul>
