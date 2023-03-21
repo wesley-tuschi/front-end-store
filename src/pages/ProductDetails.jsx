@@ -1,13 +1,17 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
+import { saveLocalStorage } from '../services/helpers';
 
 class ProductDetails extends Component {
-  state = {
-    name: '',
-    price: '',
-    image: '',
-  };
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      price: '',
+      image: '',
+    };
+  }
 
   componentDidMount() {
     this.fetchProductId();
@@ -23,6 +27,12 @@ class ProductDetails extends Component {
     });
   };
 
+  addProductToCart = () => {
+    const { match: { params: { id } } } = this.props;
+    const { name, image, price } = this.state;
+    saveLocalStorage(id, name, price, image);
+  };
+
   render() {
     const { name, price, image } = this.state;
     return (
@@ -30,7 +40,12 @@ class ProductDetails extends Component {
         <p data-testid="product-detail-name">{name}</p>
         <p data-testid="product-detail-price">{price}</p>
         <img data-testid="product-detail-image" src={ image } alt={ name } />
-        <button data-testid="shopping-cart-button">Adicionar ao carrinho</button>
+        <button
+          data-testid="product-detail-add-to-cart"
+          onClick={ this.addProductToCart }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }
