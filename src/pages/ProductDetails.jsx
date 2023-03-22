@@ -7,7 +7,14 @@ class ProductDetails extends Component {
   constructor() {
     super();
     this.state = {
-      objProps: { id: '', name: '', price: '', image: '', freeShipping: false },
+      objProps: {
+        id: '',
+        name: '',
+        price: '',
+        image: '',
+        freeShipping: false,
+        maxQuantity: 1,
+      },
     };
   }
 
@@ -25,6 +32,7 @@ class ProductDetails extends Component {
         price: productObj.price,
         image: productObj.thumbnail,
         freeShipping: productObj.shipping.free_shipping,
+        maxQuantity: productObj.available_quantity,
       },
     });
   };

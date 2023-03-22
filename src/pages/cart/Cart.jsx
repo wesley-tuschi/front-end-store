@@ -22,8 +22,10 @@ class Cart extends Component {
 
   increaseQuantity = (index) => {
     const { array } = this.state;
-    array[index].quantity += 1;
-    this.setState({ array }, this.updateLocalStorage);
+    if (array[index].maxQuantity > array[index].quantity) {
+      array[index].quantity += 1;
+      this.setState({ array }, this.updateLocalStorage);
+    }
   };
 
   decreaseQuantity = (index) => {

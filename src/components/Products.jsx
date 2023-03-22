@@ -24,6 +24,7 @@ class Products extends React.Component {
               image={ product.thumbnail }
               price={ product.price }
               freeShipping={ product.shipping.free_shipping }
+              maxQuantity={ product.available_quantity }
             />
           ))}
         </ul>
