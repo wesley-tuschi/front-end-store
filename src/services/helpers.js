@@ -1,4 +1,4 @@
-export function saveLocalStorage({ id, name, price, image, freeShipping }) {
+export function saveLocalStorage({ id, name, price, image, freeShipping, maxQuantity }) {
   const local = localStorage.getItem('product');
   if (local) {
     const newLocal = JSON.parse(local);
@@ -11,6 +11,7 @@ export function saveLocalStorage({ id, name, price, image, freeShipping }) {
           image: product.image,
           quantity: product.quantity + 1,
           freeShipping: product.freeShipping,
+          maxQuantity: product.maxQuantity,
         };
       }
       return product;
@@ -23,6 +24,7 @@ export function saveLocalStorage({ id, name, price, image, freeShipping }) {
         image,
         quantity: 1,
         freeShipping,
+        maxQuantity,
       });
     }
     localStorage.setItem('product', JSON.stringify(localParse));
@@ -34,6 +36,7 @@ export function saveLocalStorage({ id, name, price, image, freeShipping }) {
       image,
       quantity: 1,
       freeShipping,
+      maxQuantity,
     }]));
   }
 }

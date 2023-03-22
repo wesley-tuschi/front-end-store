@@ -7,12 +7,18 @@ class ProductCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      objProps: { id: '', name: '', price: '', image: '', freeShipping: false },
+      objProps: { id: '',
+        name: '',
+        price: '',
+        image: '',
+        freeShipping: false,
+        maxQuantity: 1,
+      },
     };
   }
 
   componentDidMount() {
-    const { id, name, price, image, freeShipping } = this.props;
+    const { id, name, price, image, freeShipping, maxQuantity } = this.props;
     this.setState({
       objProps: {
         id,
@@ -20,6 +26,7 @@ class ProductCard extends React.Component {
         price,
         image,
         freeShipping,
+        maxQuantity,
       },
     });
   }
@@ -63,6 +70,7 @@ ProductCard.propTypes = {
   image: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   freeShipping: PropTypes.bool.isRequired,
+  maxQuantity: PropTypes.number.isRequired,
 };
 
 export default ProductCard;
