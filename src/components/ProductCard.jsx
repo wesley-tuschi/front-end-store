@@ -4,13 +4,33 @@ import { Link } from 'react-router-dom';
 import { saveLocalStorage } from '../services/helpers';
 
 class ProductCard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      objProps: { id: '', name: '', price: '', image: '', freeShipping: false },
+    };
+  }
+
+  componentDidMount() {
+    const { id, name, price, image, freeShipping } = this.props;
+    this.setState({
+      objProps: {
+        id,
+        name,
+        price,
+        image,
+        freeShipping,
+      },
+    });
+  }
+
   addProductToCart = () => {
-    const { id, name, price, image } = this.props;
-    saveLocalStorage(id, name, price, image, 1);
+    const { objProps } = this.state;
+    saveLocalStorage(objProps);
   };
 
   render() {
-    const { name, image, price, id } = this.props;
+    const { name, image, price, id, freeShipping } = this.props;
     return (
       <div data-testid="product">
         <Link
@@ -24,6 +44,7 @@ class ProductCard extends React.Component {
           <p>{name}</p>
           <p>{price}</p>
           <img src={ image } alt={ name } />
+          { freeShipping ? <p data-testid="free-shipping">Frete Grátis </p> : null }
         </Link>
         <button
           data-testid="product-add-to-cart"
@@ -40,7 +61,8 @@ ProductCard.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  freeShipping: PropTypes.bool.isRequired,
 };
 
 export default ProductCard;

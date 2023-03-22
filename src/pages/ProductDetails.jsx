@@ -7,9 +7,7 @@ class ProductDetails extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
-      price: '',
-      image: '',
+      objProps: { id: '', name: '', price: '', image: '', freeShipping: false },
     };
   }
 
@@ -21,25 +19,29 @@ class ProductDetails extends Component {
     const { match: { params: { id } } } = this.props;
     const productObj = await getProductById(id);
     this.setState({
-      name: productObj.title,
-      price: productObj.price,
-      image: productObj.thumbnail,
+      objProps: {
+        id,
+        name: productObj.title,
+        price: productObj.price,
+        image: productObj.thumbnail,
+        freeShipping: productObj.shipping.free_shipping,
+      },
     });
   };
 
   addProductToCart = () => {
-    const { match: { params: { id } } } = this.props;
-    const { name, image, price } = this.state;
-    saveLocalStorage(id, name, price, image);
+    const { objProps } = this.state;
+    saveLocalStorage(objProps);
   };
 
   render() {
-    const { name, price, image } = this.state;
+    const { objProps: { name, price, image, freeShipping } } = this.state;
     return (
       <div>
         <p data-testid="product-detail-name">{name}</p>
         <p data-testid="product-detail-price">{price}</p>
         <img data-testid="product-detail-image" src={ image } alt={ name } />
+        { freeShipping ? <p data-testid="free-shipping">Frete Grátis </p> : null }
         <button
           data-testid="product-detail-add-to-cart"
           onClick={ this.addProductToCart }

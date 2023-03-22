@@ -9,7 +9,7 @@ class ProductList extends Component {
     showMessage: true,
     category: '',
     productList: [],
-    totalItens: '',
+    totalItens: 1,
   };
 
   searchForCategory = ({ target }) => { // Função usada para elevar o state de CategoriesList
@@ -22,7 +22,7 @@ class ProductList extends Component {
   searchForInput = async () => {
     const { category, inputValue } = this.state;
     const productObjs = await getProductsFromCategoryAndQuery(category, inputValue);
-
+    // console.log(productObjs);
     this.setState({
       productList: productObjs.results,
       totalItens: productObjs.paging.total,
