@@ -5,12 +5,12 @@ import { saveLocalStorage } from '../services/helpers';
 
 class ProductCard extends React.Component {
   addProductToCart = () => {
-    const { id, name, price, image } = this.props;
-    saveLocalStorage(id, name, price, image, 1);
+    const { id, name, price, image, freeShipping } = this.props;
+    saveLocalStorage(id, name, price, image, freeShipping);
   };
 
   render() {
-    const { name, image, price, id } = this.props;
+    const { name, image, price, id, freeShipping } = this.props;
     return (
       <div data-testid="product">
         <Link
@@ -24,6 +24,7 @@ class ProductCard extends React.Component {
           <p>{name}</p>
           <p>{price}</p>
           <img src={ image } alt={ name } />
+          { freeShipping ? <p data-testid="free-shipping">Frete Grátis </p> : null }
         </Link>
         <button
           data-testid="product-add-to-cart"
@@ -41,6 +42,7 @@ ProductCard.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  freeShipping: PropTypes.bool.isRequired,
 };
 
 export default ProductCard;

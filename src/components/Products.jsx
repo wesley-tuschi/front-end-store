@@ -23,6 +23,7 @@ class Products extends React.Component {
               name={ product.title }
               image={ product.thumbnail }
               price={ product.price }
+              freeShipping={ product.shipping.free_shipping }
             />
           ))}
         </ul>
