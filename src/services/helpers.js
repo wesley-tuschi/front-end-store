@@ -1,4 +1,4 @@
-export function saveLocalStorage(id, name, price, image, freeShipping) {
+export function saveLocalStorage({ id, name, price, image, freeShipping }) {
   const local = localStorage.getItem('product');
   if (local) {
     const newLocal = JSON.parse(local);

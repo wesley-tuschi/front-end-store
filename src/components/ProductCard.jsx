@@ -4,9 +4,29 @@ import { Link } from 'react-router-dom';
 import { saveLocalStorage } from '../services/helpers';
 
 class ProductCard extends React.Component {
-  addProductToCart = () => {
+  constructor() {
+    super();
+    this.state = {
+      objProps: { id: '', name: '', price: '', image: '', freeShipping: false },
+    };
+  }
+
+  componentDidMount() {
     const { id, name, price, image, freeShipping } = this.props;
-    saveLocalStorage(id, name, price, image, freeShipping);
+    this.setState({
+      objProps: {
+        id,
+        name,
+        price,
+        image,
+        freeShipping,
+      },
+    });
+  }
+
+  addProductToCart = () => {
+    const { objProps } = this.state;
+    saveLocalStorage(objProps);
   };
 
   render() {
