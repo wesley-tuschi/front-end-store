@@ -40,3 +40,22 @@ export function saveLocalStorage({ id, name, price, image, freeShipping, maxQuan
     }]));
   }
 }
+
+export function saveComentsLocalStorage(id, email, rating, evaluation) {
+  const local = localStorage.getItem(id);
+  if (local) {
+    const newLocal = JSON.parse(local);
+    newLocal.push({
+      email,
+      rating,
+      evaluation,
+    });
+    localStorage.setItem(id, JSON.stringify(newLocal));
+  } else {
+    localStorage.setItem(id, JSON.stringify([{
+      email,
+      rating,
+      evaluation,
+    }]));
+  }
+}

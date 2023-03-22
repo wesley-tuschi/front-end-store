@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import { saveLocalStorage } from '../services/helpers';
+import ProductForm from '../components/ProductForm';
 
 class ProductDetails extends Component {
   constructor() {
@@ -44,19 +45,25 @@ class ProductDetails extends Component {
 
   render() {
     const { objProps: { name, price, image, freeShipping } } = this.state;
+    const { match: { params: { id } } } = this.props;
     return (
-      <div>
-        <p data-testid="product-detail-name">{name}</p>
-        <p data-testid="product-detail-price">{price}</p>
-        <img data-testid="product-detail-image" src={ image } alt={ name } />
-        { freeShipping ? <p data-testid="free-shipping">Frete Grátis </p> : null }
-        <button
-          data-testid="product-detail-add-to-cart"
-          onClick={ this.addProductToCart }
-        >
-          Adicionar ao carrinho
-        </button>
-      </div>
+      <>
+        <div>
+          <p data-testid="product-detail-name">{name}</p>
+          <p data-testid="product-detail-price">{price}</p>
+          <img data-testid="product-detail-image" src={ image } alt={ name } />
+          { freeShipping ? <p data-testid="free-shipping">Frete Grátis </p> : null }
+          <button
+            data-testid="product-detail-add-to-cart"
+            onClick={ this.addProductToCart }
+          >
+            Adicionar ao carrinho
+          </button>
+        </div>
+        <ProductForm
+          id={ id }
+        />
+      </>
     );
   }
 }
