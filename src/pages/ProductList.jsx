@@ -22,7 +22,7 @@ class ProductList extends Component {
   searchForInput = async () => {
     const { category, inputValue } = this.state;
     const productObjs = await getProductsFromCategoryAndQuery(category, inputValue);
-    console.log(productObjs);
+    // console.log(productObjs);
     this.setState({
       productList: productObjs.results,
       totalItens: productObjs.paging.total,
